@@ -1,0 +1,10 @@
+{
+  "db_table_name": "qa_mini_demo",
+  "vector_dimension":"1536",
+  "file_path": "C:\\Users\\Abhis\\Downloads\\test.pdf",
+  "csv_file_expected_size": "10240",
+  "pdf_file_expected_size": "10240",
+  "docs_file_expected_size": "10240",
+  "text_file_expected_size": "10240"
+
+}

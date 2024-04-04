@@ -1,0 +1,26 @@
+.inProgress {
+  color: #2a9d8f; /* Stylish teal color */
+  font-style: italic;
+  font-weight: bold;
+}
+
+.resultOutput p {
+  background-color: #f4f4f4; /* Light grey background */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc; /* Light grey border */
+}
+
+.submitBtn {
+  background-color: #264653; /* Dark blue-green color */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submitBtn:disabled {
+  background-color: #6c757d; /* Disabled button color */
+}
