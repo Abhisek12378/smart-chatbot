@@ -1,8 +1,8 @@
-import fitz
-import easyocr
+#import fitz
+#import easyocr
 import io
 import PyPDF2
-from PIL import Image
+#from PIL import Image
 from langchain.document_loaders.csv_loader import CSVLoader
 from config_loader import AppConfig
 from docx import Document
@@ -49,7 +49,12 @@ class PDFReader:
             text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=50)
             chunks = text_splitter.create_documents([text_content])
             return chunks
-            ##return text_content
+        else:
+            return None
+
+
+
+'''
         doc = fitz.open(self.filepath)
         full_text = ""
         for page_num in range(len(doc)):
@@ -64,6 +69,7 @@ class PDFReader:
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=50)
         chunks = text_splitter.create_documents([full_text])
         return chunks
+'''
 
 
 class CSVReader:

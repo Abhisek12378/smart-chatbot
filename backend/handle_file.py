@@ -53,6 +53,8 @@ class FileProcessor:
         task_type = self.lang_processor.predict_task_type(file_path.suffix.lower(), query)
         reader = reader_class(file_path)
         content_chunks = reader.read_file()
+        if content_chunks==None:
+            return "File could not be read"
         vector_db = self.lang_processor.do_embedding(content_chunks)
 
         match task_type:
