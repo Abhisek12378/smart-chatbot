@@ -10,10 +10,12 @@ export default function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleQuestionChange = (event: any) => {
+    console.log("Question changed:", event.target.value); // Logging question change
     setQuestion(event.target.value);
   };
 
   const handleFileChange = (event: any) => {
+    console.log("File selected:", event.target.files[0].name); // Logging file selection
     setFile(event.target.files[0]);
     const newTimestamp = new Date().toISOString();
     setTimestamp(newTimestamp);
@@ -21,32 +23,44 @@ export default function App() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    setResult(undefined);
+    console.log("Form submitted with question:", question); // Logging form submission
+
     setIsLoading(true);
+    console.log("Loading state set to true");
 
     const formData = new FormData();
 
     if (file) {
+      console.log("Appending file to formData");
       formData.append("file", file);
     }
     if (question) {
+      console.log("Appending question to formData");
       formData.append("question", question);
     }
     formData.append("timestamp", timestamp);
 
+    console.log("Sending fetch request to backend");
     fetch(`${process.env.REACT_APP_BACKEND_URL}/predict`, {
            method: "POST",
            body: formData,
     })
-
-      .then((response) => response.json())
+      .then((response) => {
+        console.log("Received response from backend");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
+        console.log("Successfully fetched data:", data);
         setIsLoading(false);
         setResult(data.result);
         setQuestion("");
       })
       .catch((error) => {
-        console.error("Error", error);
+        console.error("Fetch error:", error);
+        setIsLoading(false);
       });
   };
 
