@@ -18,7 +18,8 @@ class Response(BaseModel):
 origins = [
     "http://localhost",
     "http://localhost:8080",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    os.getenv("FRONTEND_URL")
 ]
 
 app = FastAPI()
