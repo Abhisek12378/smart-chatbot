@@ -32,7 +32,7 @@ class PDFReader:
             xref = img[0]
             base_image = page.parent.extract_image(xref)
             image_bytes = base_image["image"]
-            images.append(Image.open(io.BytesIO(image_bytes)))
+            #images.append(Image.open(io.BytesIO(image_bytes)))
         return images
 
     def images_to_text(self, images):
