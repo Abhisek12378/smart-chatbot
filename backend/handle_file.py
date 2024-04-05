@@ -27,7 +27,6 @@ class FileProcessor:
             print("This type of file is not supported now")
             return None
 
-        print(response)
         return response
 
     def get_pdf_file_result(self, file_path, query):
