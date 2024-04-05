@@ -19,7 +19,9 @@ origins = [
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:3000",
-    os.getenv("FRONTEND_URL")
+    os.getenv("FRONTEND_URL"),
+    "https://smart-file-chatbot-frontend-7ab84b0a5cd3.herokuapp.com/",
+    "https://smart-file-chatbot-frontend-7ab84b0a5cd3.herokuapp.com"
 ]
 
 app = FastAPI()
