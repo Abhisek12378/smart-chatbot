@@ -14,7 +14,7 @@ config=AppConfig()
 class PDFReader:
     def __init__(self, filepath):
         self.filepath = filepath
-        self.reader = easyocr.Reader(['en'])
+        #self.reader = easyocr.Reader(['en'])
 
     def extract_text_with_pypdf2(self):
         text = ""
