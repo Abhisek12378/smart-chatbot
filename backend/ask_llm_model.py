@@ -4,7 +4,8 @@ from langchain import PromptTemplate
 from langchain.chains import LLMChain, RetrievalQA
 from langchain.chains.summarize import load_summarize_chain
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceInstructEmbeddings
+from langchain.embeddings import OpenAIEmbeddings
+#from langchain_community.embeddings import HuggingFaceInstructEmbeddings
 import json
 config=AppConfig()
 class LanguageProcessing:
@@ -40,8 +41,9 @@ class LanguageProcessing:
         return task_type
 
     def do_embedding(self, info_text):
-        instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
-        vectordb = FAISS.from_documents(documents=info_text, embedding=instructor_embeddings)
+       # instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
+        openai_embedding=OpenAIEmbeddings()
+        vectordb = FAISS.from_documents(documents=info_text, embedding=openai_embedding)
         return vectordb
 
     def summarize_text(self, info_chunk, query_value):
