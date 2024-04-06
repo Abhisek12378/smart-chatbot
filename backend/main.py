@@ -47,12 +47,10 @@ async def predict(file: UploadFile = File(...), question: str = Form(...), times
         if not (os.path.exists(file_location)):
             with open(file_location, "wb") as file_object:
                 file_object.write(file.file.read())
+        else:
+            pass
         file_process_obj = FileProcessor()
         query_result = str(file_process_obj.process_file(file_location, question))
-
-        result = f"File saved to {file_location}, question: {question}, timestamp: {timestamp}"
-        print(query_result)
-
         return {"result": query_result}
 
     except Exception as e:

@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import "./App.css";
+import "./App.css";
 import "./components/result.css"
 
 export default function App() {
@@ -61,6 +61,7 @@ export default function App() {
       .catch((error) => {
         console.error("Fetch error:", error);
         setIsLoading(false);
+        setResult(undefined);
       });
   };
 

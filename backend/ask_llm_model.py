@@ -38,6 +38,7 @@ class LanguageProcessing:
         print(type(result))
         parsed_json = json.loads(result)
         task_type = parsed_json['task_type']
+        print(task_type)
         return task_type
 
     def do_embedding(self, info_text):
