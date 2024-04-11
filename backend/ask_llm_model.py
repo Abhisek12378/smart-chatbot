@@ -9,9 +9,9 @@ from langchain.embeddings import OpenAIEmbeddings
 import json
 config=AppConfig()
 class LanguageProcessing:
-    def __init__(self, openai_api_key=config.openai_api_key, temperature=0.2):
+    def __init__(self, openai_api_key=config.openai_api_key, temperature=config.open_ai_temperature):
         self.llm = OpenAI(openai_api_key=openai_api_key, temperature=temperature, verbose=True)
-        self.temperature = temperature
+        self.temperature = float(temperature)
 
     def predict_task_type(self, filetype, query):
         generic_template = '''
@@ -38,7 +38,6 @@ class LanguageProcessing:
         print(type(result))
         parsed_json = json.loads(result)
         task_type = parsed_json['task_type']
-        print(task_type)
         return task_type
 
     def do_embedding(self, info_text):
@@ -75,4 +74,29 @@ class LanguageProcessing:
         result=json_result['result']
 
         return result
+
+    def language_translation(self,info_chunk,query_value):
+        query_chain_template = '''
+        We need to perform a language translation task. For the query provided below, determine the target language to which we have to translate the content.
+        {query_text}
+        The output should be the name of the target language, represented as a single word (e.g., "English").
+        '''
+        query_chain_template_name = PromptTemplate(template=query_chain_template, input_variables=["query_text"])
+        query_chain = LLMChain(llm=self.llm, prompt=query_chain_template_name)
+        target_language_result = query_chain.run(query_value)
+        translation_prompt_template = '''
+        Translate the following text from English to {target_language} and don't add English version of it in output
+        {text}
+        '''
+        translation_chain_template_name = PromptTemplate(template=translation_prompt_template,
+                                                         input_variables=["target_language", "text"])
+        translation_chain = LLMChain(llm=self.llm, prompt=translation_chain_template_name)
+        final_result=""
+        for content in info_chunk:
+            translation_result = translation_chain.run({"target_language": target_language_result, "text": content})
+            final_result=final_result+"\n"+translation_result
+        return final_result
+
+
+
 

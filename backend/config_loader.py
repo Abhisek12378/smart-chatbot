@@ -5,11 +5,7 @@ import json
 class AppConfig:
     def __init__(self):
         load_dotenv()
-
-        self.astra_db_token = os.getenv("ASTRA_DB_APPLICATION_TOKEN")
         self.openai_api_key = os.getenv("OPENAI_API_KEY")
-        self.astra_db_id = os.getenv("ASTRA_DB_ID")
-
         self.load_from_json('config.json')
 
     def load_from_json(self, filepath):

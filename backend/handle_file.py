@@ -3,7 +3,6 @@ import os
 from config_loader import AppConfig
 from read_files import PDFReader, CSVReader, DocsReader, TextFileReader
 from ask_llm_model import LanguageProcessing
-import faiss
 
 
 class FileProcessor:
@@ -67,5 +66,12 @@ class FileProcessor:
                 if content_chunks == None:
                     return "File could not be read"
                 return self.lang_processor.summarize_text(content_chunks, query)
+            case 'Translation':
+                reader = reader_class(file_path)
+                content_chunks = reader.read_file()
+                if content_chunks == None:
+                    return "File could not be read"
+                return self.lang_processor.language_translation(content_chunks, query)
+
             case _:
                 return "Currently, this type of task is not supported"

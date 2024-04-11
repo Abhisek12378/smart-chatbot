@@ -12,8 +12,10 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 config=AppConfig()
 
 class PDFReader:
-    def __init__(self, filepath):
+    def __init__(self, filepath,chunk_size=config.chunk_size,chunk_overlap_size=config.chunk_overlap_size):
         self.filepath = filepath
+        self.chunk_size=int(chunk_size)
+        self.chunk_overlap_size=int(chunk_overlap_size)
         #self.reader = easyocr.Reader(['en'])
 
     def extract_text_with_pypdf2(self):
@@ -46,7 +48,7 @@ class PDFReader:
     def read_file(self):
         text_content = self.extract_text_with_pypdf2()
         if text_content.strip():
-            text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=50)
+            text_splitter = RecursiveCharacterTextSplitter(chunk_size=self.chunk_size, chunk_overlap=self.chunk_overlap_size)
             chunks = text_splitter.create_documents([text_content])
             return chunks
         else:
@@ -88,7 +90,7 @@ class TextFileReader:
     def read_file(self):
         loader = TextLoader(self.filepath)
         data=loader.load()
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=100)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=self.chunk_size, chunk_overlap=self.chunk_overlap_size)
         chunks = text_splitter.create_documents([data[0].page_content])
         return chunks
 
@@ -101,7 +103,7 @@ class DocsReader:
         full_text = ""
         for para in doc.paragraphs:
             full_text += para.text + "\n"
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=10000, chunk_overlap=50)
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=self.chunk_size, chunk_overlap=self.chunk_overlap_size)
         chunks = text_splitter.create_documents([full_text])
         return chunks
 
