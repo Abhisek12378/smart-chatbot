@@ -75,8 +75,10 @@ class PDFReader:
 
 
 class CSVReader:
-    def __init__(self, filepath):
+    def __init__(self, filepath,chunk_size=config.chunk_size,chunk_overlap_size=config.chunk_overlap_size):
         self.filepath=filepath
+        self.chunk_size=int(chunk_size)
+        self.chunk_overlap_size=int(chunk_overlap_size)
 
     def read_file(self):
         loader = CSVLoader(file_path=self.filepath)
@@ -84,8 +86,10 @@ class CSVReader:
         return  data
 
 class TextFileReader:
-    def __init__(self,filepath):
+    def __init__(self,filepath,chunk_size=config.chunk_size,chunk_overlap_size=config.chunk_overlap_size):
         self.filepath=filepath
+        self.chunk_size=int(chunk_size)
+        self.chunk_overlap_size=int(chunk_overlap_size)
 
     def read_file(self):
         loader = TextLoader(self.filepath)
@@ -95,8 +99,10 @@ class TextFileReader:
         return chunks
 
 class DocsReader:
-    def __init__(self,filepath):
+    def __init__(self,filepath,chunk_size=config.chunk_size,chunk_overlap_size=config.chunk_overlap_size):
         self.filepath=filepath
+        self.chunk_size=int(chunk_size)
+        self.chunk_overlap_size=int(chunk_overlap_size)
 
     def read_file(self):
         doc = Document(self.filepath)
